@@ -42,4 +42,6 @@ deployment:
     commands:
       # deploy to AppEngine
       - cd ./build/staged-app/
+      - ls
+      - mv gae-springboot-starter*.jar gae-springboot-starter.jar
       - gcloud -q app deploy app.yaml --promote --version=staging
