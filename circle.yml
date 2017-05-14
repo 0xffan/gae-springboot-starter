@@ -32,6 +32,9 @@ compile:
 test:
   override:
     - ./gradlew test
+  post:
+    - mkdir $CIRCLE_ARTIFACTS/staged-app
+    - cp ./build/staged-app/* $CIRCLE_ARTIFACTS/staged-app/
 
 ## Customize deployment commands
 deployment:
@@ -41,7 +44,5 @@ deployment:
     branch: master
     commands:
       # deploy to AppEngine
-      - cd ./build/staged-app/
-      - ls
-      - mv gae-springboot-starter*.jar gae-springboot-starter.jar
-      - gcloud -q app deploy app.yaml --promote --version=staging
+      - mv ./build/staged-app/gae-springboot-starter*.jar ./build/staged-app/gae-springboot-starter.jar
+      - cd ./build/staged-app/ && gcloud -q app deploy app.yaml --promote --version=staging
