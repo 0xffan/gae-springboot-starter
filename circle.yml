@@ -1,0 +1,41 @@
+## Customize the test machine
+machine:
+
+  timezone:
+    Asia/Chongqing
+
+  java:
+    version: openjdk8
+
+dependencies:
+  pre:
+    # This is not necessary to deploy, its only necessary  to run local tests importing the App Engine SDK
+    - curl -o $HOME/google_appengine_1.9.30.zip https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.30.zip
+    - unzip -q -d $HOME $HOME/google_appengine_1.9.30.zip
+    # Retrieve our secrets from the CircleCI environment
+    - echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+    # Make sure gcloud is up to date
+    - gcloud --quiet components update app
+    # authenticate gcloud
+    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+    - gcloud config set project $GCLOUD_PROJECT
+
+compile:
+  override:
+    - ./gradlew appengineStage
+
+## Customize test commands
+test:
+  override:
+    - ./gradlew test
+
+## Customize deployment commands
+deployment:
+  staging:
+    pre:
+      - pyenv global 2.7.12
+    branch: master
+    commands:
+      # deploy to AppEngine
+      - cd ./build/staged-app/
+      - gcloud -q app deploy app.yaml --promote --version=staging
