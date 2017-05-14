@@ -1,5 +1,7 @@
 # Hello Google App Engine for Spring Boot
 
+[![CircleCI](https://circleci.com/gh/ixfan/gae-springboot-starter.svg?style=svg)](https://circleci.com/gh/ixfan/gae-springboot-starter)
+
 This sample shows you how to deploy a simple "Hello World" [Spring Boot](http://projects.spring.io/spring-boot/) application to
 [Google App Engine](https://cloud.google.com/appengine/docs/java/).
 
@@ -11,11 +13,11 @@ This sample shows you how to deploy a simple "Hello World" [Spring Boot](http://
 3.  [Create a new Google Cloud Platform project, or use an existing one](https://console.cloud.google.com/project).
 4.  Initialize the Cloud SDK.
 
-           gcloud init
+            gcloud init
 
 5.  Install the Cloud SDK `app-engine-java` component.
 
-           gcloud components install app-engine-java
+            gcloud components install app-engine-java
 
 ## Deploying to App Engine
 
