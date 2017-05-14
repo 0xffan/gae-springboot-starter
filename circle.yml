@@ -7,6 +7,10 @@ machine:
   java:
     version: openjdk8
 
+checkout:
+  post:
+    - mv -f build_maven_central.gradle build.gradle
+
 dependencies:
   pre:
     # This is not necessary to deploy, its only necessary  to run local tests importing the App Engine SDK
